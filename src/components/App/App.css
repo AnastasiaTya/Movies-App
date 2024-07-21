@@ -1,0 +1,35 @@
+.wrapper {
+  box-sizing: border-box;
+  width: 1010px;
+  height: 100%;
+  background: #fff;
+  margin: 0 auto;
+  padding-top: 23px;
+  padding-left: 32px;
+  display: block;
+}
+
+.constructor {
+  width: 1010px;
+  height: 100vh;
+  background: #fff;
+  margin: 0 auto;
+}
+
+.wrapper .card-spin__wrapper {
+  height: 100vh;
+}
+
+.wrapper .nonePagination {
+  height: 85vh;
+}
+
+.wrapper .card-error__wrapper {
+  height: 90vh;
+}
+
+.wrapper-position {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

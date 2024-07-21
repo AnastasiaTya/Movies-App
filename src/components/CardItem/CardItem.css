@@ -1,0 +1,115 @@
+.card-item {
+  width: 451px;
+  height: 281px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  display: flex;
+}
+.card-grid {
+  border-radius: 0;
+  margin: 0 20px;
+  width: 268px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.tittle-wrapper {
+  display: -webkit-box;
+  width: 190px;
+  height: 28px;
+  white-space: normal;
+  overflow: hidden;
+  word-break: break-word;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  padding: 10px 0 6px 0;
+}
+
+.card-title {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 140%;
+  color: #000;
+  margin: 0;
+}
+
+.card-data {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 183%;
+  color: #827e7e;
+  margin: 0 0 7px 0;
+}
+
+.title-description {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 183%;
+  color: #000;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.genres-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.card-genres {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  background: #fafafa;
+  padding: 3px;
+  font-size: 0;
+}
+
+.genres-description {
+  font-weight: 400;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-rate-star:not(:last-child) {
+  margin-inline-end: 2.5px !important;
+}
+
+.stars {
+  margin-top: auto;
+  margin-bottom: 15px;
+}
+
+.card-rating {
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 8px;
+  right: -12px;
+}
+
+.rating-num {
+  font-size: 12px;
+}
+
+.ratingBad {
+  border: 2px solid #e90000;
+}
+
+.ratingMedium {
+  border: 2px solid #e97e00;
+}
+
+.ratingGood {
+  border: 2px solid #e9d100;
+}
+
+.ratingPerfect {
+  border: 2px solid #66e900;
+}

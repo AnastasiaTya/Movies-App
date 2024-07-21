@@ -34,23 +34,17 @@
     "semi": ["error", "never"],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,
+    // "properties": "never",
     "import/no-unresolved": [2, { "caseSensitive": false }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/destructuring-assignment": [0, { "destructureInSignature": "always" }],
     "import/order": [
       2,
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         "newlines-between": "always"
       }
     ]
-    // "requireConfigFile": 2
   },
   "settings": {
     "react": {
