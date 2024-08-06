@@ -2,7 +2,7 @@ import { Component } from 'react'
 import debounce from 'lodash/debounce'
 
 import './App.css'
-
+import { Provider } from '../GenresContext'
 import validateText from '../../utils/validateText'
 import MoviesApp from '../../services/MoviesApp'
 import CardList from '../CardList'
@@ -67,12 +67,17 @@ export default class App extends Component {
   addRating = (value, movieId) => {
     const sessionId = this.state.guestSessionId
     this.moviesApp.fetchRating(sessionId, movieId, value).catch(this.onError)
-    this.setState((prevState) => ({
-      search: {
-        ...prevState.search,
-        myRating: value,
-      },
-    }))
+    this.setState((prevState) => {
+      const updatedSearchMovies = prevState.search.movies.map((movie) =>
+        movie.id === movieId ? { ...movie, myRating: value } : movie
+      )
+      return {
+        search: {
+          ...prevState.search,
+          movies: updatedSearchMovies,
+        },
+      }
+    })
   }
 
   onError = () => {
@@ -99,6 +104,7 @@ export default class App extends Component {
   }
 
   addRatedMovies = () => {
+    this.setState({ loading: true, error: false })
     const sessionId = this.state.guestSessionId
     this.moviesApp
       .ratedMovies(sessionId)
@@ -137,22 +143,25 @@ export default class App extends Component {
 
   updateCardList() {
     this.setState({ loading: true, error: false })
-    const { search } = this.state
+    const { search, rated } = this.state
     const { currentPage, query } = search
     this.moviesApp
       .getMovie(currentPage, query)
       .then((data) => {
         const { total_results: totalResults, results } = data
-        const movies = results.map((movie) => ({
-          title: movie.title,
-          date: movie.release_date,
-          genre: movie.genre_ids,
-          description: validateText(movie.overview, 139),
-          image: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
-          id: movie.id,
-          rating: movie.vote_average.toFixed(1),
-          myRating: 0,
-        }))
+        const movies = results.map((movie) => {
+          const ratedMovie = rated.movies.find((ratedFilm) => ratedFilm.id === movie.id)
+          return {
+            title: movie.title,
+            date: movie.release_date,
+            genre: movie.genre_ids,
+            description: validateText(movie.overview, 139),
+            image: `https://image.tmdb.org/t/p/original${movie.poster_path}`,
+            id: movie.id,
+            rating: movie.vote_average.toFixed(1),
+            myRating: ratedMovie ? ratedMovie.isRating : 0,
+          }
+        })
         this.setState((prevState) => ({
           search: {
             ...prevState.search,
@@ -176,37 +185,33 @@ export default class App extends Component {
   }
 
   render() {
-    const { search, error, genres, type, loading } = this.state
+    const { search, error, type, loading } = this.state
     const { movies, totalResults } = search
     return (
-      <div className="wrapper">
-        <div className="wrapper-position">
-          <TabsHeader toggleTabs={this.toggleTabs} addRatedMovies={this.addRatedMovies} />
+      <Provider value={this.state.genres}>
+        <div className="wrapper">
+          <div className="wrapper-position">
+            <TabsHeader toggleTabs={this.toggleTabs} addRatedMovies={this.addRatedMovies} />
+          </div>
+          {type === 'search' ? (
+            <>
+              <SearchPanel updateSearch={this.updateSearch} />
+              <CardList movies={movies} loading={loading} error={error} addRating={this.addRating} type={type} />
+              <PaginationFooter clickPage={this.clickPage} totalResults={totalResults} movies={movies} error={error} />
+            </>
+          ) : (
+            <div className="rated-wrapper">
+              <CardList
+                movies={this.state.rated.movies}
+                loading={loading}
+                error={error}
+                addRating={this.addRating}
+                type={type}
+              />
+            </div>
+          )}
         </div>
-        {type === 'search' ? (
-          <>
-            <SearchPanel updateSearch={this.updateSearch} />
-            <CardList
-              movies={movies}
-              loading={loading}
-              error={error}
-              genres={genres}
-              addRating={this.addRating}
-              type={type}
-            />
-            <PaginationFooter clickPage={this.clickPage} totalResults={totalResults} movies={movies} error={error} />
-          </>
-        ) : (
-          <CardList
-            movies={this.state.rated.movies}
-            loading={loading}
-            error={error}
-            genres={genres}
-            addRating={this.addRating}
-            type={type}
-          />
-        )}
-      </div>
+      </Provider>
     )
   }
 }

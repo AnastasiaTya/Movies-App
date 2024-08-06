@@ -9,6 +9,11 @@
   display: block;
 }
 
+.wrapper .rated-wrapper {
+  min-height: 795px;
+  padding-bottom: 20px;
+}
+
 .constructor {
   width: 1010px;
   height: 100vh;

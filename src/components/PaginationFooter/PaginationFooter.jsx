@@ -3,7 +3,7 @@ import { Pagination, Alert } from 'antd'
 import './PaginationFooter.css'
 
 function PaginationFooter({ clickPage, totalResults, error, movies }) {
-  if (movies.length === 0) {
+  if (movies.length === 0 && !error) {
     return (
       <div className="nonePagination">
         <Alert message="Nothing was found" type="warning" description="Check the spelling of the movie and try again" />

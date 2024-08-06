@@ -1,10 +1,11 @@
 import { Spin, Alert } from 'antd'
 
 import CardItem from '../CardItem'
+import { Consumer } from '../GenresContext'
 
 import './CardList.css'
 
-function CardList({ movies, loading, error, genres, addRating, type }) {
+function CardList({ movies, loading, error, addRating, type }) {
   const spin = <Spin size="large" />
   if (loading) {
     return <div className="card-spin__wrapper">{spin}</div>
@@ -23,21 +24,25 @@ function CardList({ movies, loading, error, genres, addRating, type }) {
   const movie = movies.map((film) => {
     const { id, title, date, genre, description, image, rating, isRating, myRating } = film
     return (
-      <CardItem
-        key={id}
-        movieId={id}
-        title={title}
-        date={date}
-        genre={genre}
-        description={description}
-        image={image}
-        genres={genres}
-        rating={rating}
-        addRating={addRating}
-        isRating={isRating}
-        type={type}
-        myRating={myRating}
-      />
+      <Consumer>
+        {(genres) => (
+          <CardItem
+            key={id}
+            movieId={id}
+            title={title}
+            date={date}
+            genre={genre}
+            description={description}
+            image={image}
+            genres={genres}
+            rating={rating}
+            addRating={addRating}
+            isRating={isRating}
+            type={type}
+            myRating={myRating}
+          />
+        )}
+      </Consumer>
     )
   })
   const spinner = loading ? spin : null

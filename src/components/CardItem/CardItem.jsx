@@ -18,7 +18,20 @@ function getRating(rating) {
   return 'ratingPerfect'
 }
 
-function CardItem({ title, date, genre, description, image, genres, rating, addRating, movieId, isRating, type }) {
+function CardItem({
+  title,
+  date,
+  genre,
+  description,
+  image,
+  genres,
+  rating,
+  addRating,
+  movieId,
+  isRating,
+  type,
+  myRating,
+}) {
   const getGenreName = (id) => {
     if (id === undefined) {
       return id
@@ -32,6 +45,8 @@ function CardItem({ title, date, genre, description, image, genres, rating, addR
   let value = 0
   if (type === 'rated') {
     value = isRating
+  } else {
+    value = myRating
   }
   return (
     <div className="card-item">
